@@ -3,50 +3,81 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FAB HAUS — Architecture &amp; Prefabrication</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="description" content="FAB HAUS — Architecture, Interiors, Pre-Fab & Modular. Precision-built spaces from concept to completion.">
+  <meta property="og:title" content="FAB HAUS — Architecture & Prefabrication">
+  <meta property="og:description" content="Architecture, Interiors, Pre-Fab & LGSF, Modular. Precision-built from concept to completion.">
+  <meta property="og:type" content="website">
+  <title>FAB HAUS — Architecture & Prefabrication</title>
+
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
   <script>
     tailwind.config = {
       theme: {
         extend: {
           fontFamily: {
             serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
-            sans: ['"Inter"', 'sans-serif'],
+            sans:  ['"Inter"', 'system-ui', 'sans-serif'],
           },
           colors: {
-            ivory: '#F5F3EE',
-            charcoal: '#252724',
-            muted: '#85877C',
-            bronze: '#A68B69',
-            concrete: '#DAD8D0',
+            /* Palette: white · black · red */
+            ivory:   '#F5F5F3',   /* near-white — primary text             */
+            charcoal:'#1E1E1C',   /* solid dark header background           */
+            panel:   '#161614',   /* left-panel gradient start              */
+            muted:   '#909090',   /* neutral mid-grey                       */
+            crimson: '#B01828',   /* deep red — all accents                 */
+            ash:     '#D8D8D6',   /* light grey                             */
           }
         }
       }
     }
   </script>
+
   <style>
-    /* Custom refined animations & micro-interactions */
+    /* ─────────────────────────────────────────
+       SLIDE TRANSITIONS
+    ───────────────────────────────────────── */
     .slide {
-      transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1), transform 1.6s cubic-bezier(0.25, 1, 0.5, 1);
+      transition: opacity 1.6s cubic-bezier(0.25, 1, 0.5, 1),
+                  transform 2.2s cubic-bezier(0.25, 1, 0.5, 1);
       will-change: transform, opacity;
     }
-    .slide.active {
-      opacity: 1;
-      transform: scale(1);
-      pointer-events: auto;
-      z-index: 10;
-    }
-    .slide.inactive {
-      opacity: 0;
-      transform: scale(1.05);
-      pointer-events: none;
-      z-index: 0;
+    .slide.active  { opacity: 1; transform: scale(1);    pointer-events: auto; z-index: 10; }
+    .slide.inactive{ opacity: 0; transform: scale(1.04); pointer-events: none; z-index: 0;  }
+
+    /* ─────────────────────────────────────────
+       WHITE-SHADOWS LEFT PANEL GRADIENT
+       Solid dark on the left fades to transparent —
+       this is the defining aesthetic of the reference site
+    ───────────────────────────────────────── */
+    .left-panel-gradient {
+      background: linear-gradient(
+        90deg,
+        #161614               0%,
+        rgba(22,22,20,0.95)  10%,
+        rgba(22,22,20,0.80)  25%,
+        rgba(22,22,20,0.45)  45%,
+        rgba(22,22,20,0.10)  65%,
+        rgba(22,22,20,0.00)  80%
+      );
     }
 
-    /* Looped marquee band */
+    /* Bottom scrim — keeps bottom-bar text legible */
+    .bottom-scrim {
+      background: linear-gradient(
+        0deg,
+        rgba(10,10,8,0.80) 0%,
+        rgba(10,10,8,0.30) 30%,
+        transparent        60%
+      );
+    }
+
+    /* ─────────────────────────────────────────
+       MARQUEE (PROJECT.md spec)
+    ───────────────────────────────────────── */
     @keyframes marquee-scroll {
       from { transform: translateX(0); }
       to   { transform: translateX(-50%); }
@@ -54,7 +85,7 @@
     .marquee-track {
       display: flex;
       width: max-content;
-      animation: marquee-scroll 40s linear infinite;
+      animation: marquee-scroll 44s linear infinite;
       will-change: transform;
     }
     .marquee-group {
@@ -65,440 +96,594 @@
       align-items: center;
     }
 
-    /* Clean text shadows for readability over bright or contrasting architectural photography */
+    /* ─────────────────────────────────────────
+       TYPOGRAPHY & TEXT EFFECTS
+    ───────────────────────────────────────── */
     .text-scrim {
-      text-shadow: 0 1px 18px rgba(0, 0, 0, 0.45), 0 2px 4px rgba(0, 0, 0, 0.3);
-    }
-    
-    /* Smooth line hover effect */
-    .hover-line::after {
-      content: '';
-      position: absolute;
-      width: 0;
-      height: 1px;
-      bottom: -4px;
-      left: 0;
-      background-color: #F5F3EE;
-      transition: width 0.35s cubic-bezier(0.25, 1, 0.5, 1);
-    }
-    .hover-line:hover::after {
-      width: 100%;
+      text-shadow: 0 2px 28px rgba(0,0,0,0.45), 0 1px 4px rgba(0,0,0,0.25);
     }
 
-    /* Subdued pagination progress line */
+    /* Nav underline — white-shadows: 2px solid bottom border on active/hover */
+    .nav-link {
+      position: relative;
+      padding-bottom: 3px;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 1px;
+      background: #F5F5F3;
+      transition: width 0.32s cubic-bezier(0.25,1,0.5,1);
+    }
+    .nav-link:hover::after { width: 100%; }
+    .nav-link.is-active::after { width: 100%; }
+
+    /* Progress bar */
     .progress-bar-fill {
       transition: width 0.6s cubic-bezier(0.25, 1, 0.5, 1);
     }
+
+    /* Project info fade-slide */
+    #project-title,
+    #project-category,
+    #project-year,
+    #location-text,
+    #project-excerpt {
+      transition: opacity 0.42s ease, transform 0.48s cubic-bezier(0.25,1,0.5,1);
+    }
+
+    /* Hairline separators */
+    .hairline-h { border-top:  1px solid rgba(245,245,243,0.11); }
+    .hairline-v { border-left: 1px solid rgba(245,245,243,0.11); }
   </style>
 </head>
-<body class="h-full w-full bg-[#141513] text-ivory font-sans overflow-hidden select-none">
 
-  <!-- ==================== TOP NAVIGATION ==================== -->
+<!-- ─────────────────────────────────────────
+     BODY — dark background, full viewport lock
+     (white-shadows: body { height:100vh; overflow:hidden })
+───────────────────────────────────────── -->
+<body class="h-full w-full bg-[#0E0E0C] text-ivory font-sans overflow-hidden select-none">
+
+  <!-- ═══════════════════════════════════════════════════════
+       FIXED TOP BAR  (#top-bar — PROJECT.md spec)
+       Two stacked bands: solid header + marquee strip
+  ════════════════════════════════════════════════════════ -->
   <div id="top-bar" class="fixed top-0 left-0 w-full z-50">
-  <header class="relative w-full px-8 md:px-14 py-7 flex items-center justify-between transition-all duration-500 bg-gradient-to-b from-black/60 via-black/25 to-transparent">
-    <!-- Brand Logo / Wordmark -->
-    <a href="#" class="group flex items-center gap-3">
-      <span class="font-serif tracking-[0.25em] text-2xl md:text-3xl font-light text-ivory group-hover:text-bronze transition-colors duration-300">
-        FAB HAUS
-      </span>
-    </a>
 
-    <!-- Desktop Navigation Links -->
-    <nav class="hidden md:flex items-center space-x-5 lg:space-x-7 xl:space-x-9 text-xs tracking-[0.18em] uppercase font-light text-ivory/85">
-      <a href="#" class="relative hover-line hover:text-white transition-colors py-1">Home</a>
-      
-      <a href="#projects" class="relative hover-line hover:text-white transition-colors py-1">Projects</a>
+    <!-- ── Solid dark header (white-shadows aesthetic: #292929) ── -->
+    <header class="w-full bg-charcoal px-8 md:px-12 lg:px-16
+                   flex items-center justify-between"
+            style="height: 72px;">
 
-      <a href="#architecture" class="relative hover-line hover:text-white transition-colors py-1">Architecture</a>
-      <a href="#interior" class="relative hover-line hover:text-white transition-colors py-1">Interior</a>
+      <!-- Brand / Wordmark -->
+      <a href="#" class="group flex flex-col leading-none gap-1">
+        <!-- "FAB" bold-ish, "HAUS" light — mirroring "white" bold + "shadows" light -->
+        <div class="flex items-baseline gap-0 font-serif tracking-[0.3em] leading-none">
+          <span class="text-xl md:text-2xl font-normal text-ivory group-hover:text-white transition-colors duration-300">FAB</span>
+          <span class="text-xl md:text-2xl font-light   text-ivory/85 group-hover:text-white transition-colors duration-300">&nbsp;HAUS</span>
+        </div>
+        <span class="text-[7.5px] tracking-[0.38em] uppercase font-light text-muted leading-none">
+          Design Studio
+        </span>
+      </a>
 
-      <a href="#" class="relative hover-line hover:text-white transition-colors py-1">Fab Haus Modular</a>
-      <a href="#" class="relative hover-line hover:text-white transition-colors py-1">Pre-Fab</a>
-      <a href="#" class="relative hover-line hover:text-white transition-colors py-1">About Us</a>
-      <a href="#" class="relative hover-line hover:text-white transition-colors py-1 text-bronze hover:text-ivory">Contact Us</a>
-    </nav>
+      <!-- Desktop navigation (white-shadows: title case, Inter, 300/400 weight) -->
+      <nav class="hidden md:flex items-center gap-6 lg:gap-9 xl:gap-11
+                  text-[11px] tracking-[0.18em] uppercase font-light text-ivory/80">
+        <a href="#"             class="nav-link is-active hover:text-white transition-colors duration-200">Home</a>
+        <a href="#projects"     class="nav-link hover:text-white transition-colors duration-200">Projects</a>
+        <a href="#architecture" class="nav-link hover:text-white transition-colors duration-200">Architecture</a>
+        <a href="#interior"     class="nav-link hover:text-white transition-colors duration-200">Interior</a>
+        <a href="#"             class="nav-link hover:text-white transition-colors duration-200">Fab Haus Modular</a>
+        <a href="#"             class="nav-link hover:text-white transition-colors duration-200">Pre-Fab</a>
+        <a href="#"             class="nav-link hover:text-white transition-colors duration-200">About Us</a>
+        <!-- Contact Us: crimson accent, like PROJECT.md spec -->
+        <a href="#"
+           class="nav-link hover:text-white transition-colors duration-200 text-crimson"
+           style="--underline-bg: #B01828;">Contact&nbsp;Us</a>
+      </nav>
 
-    <!-- Mobile Menu Toggle Button -->
-    <button id="mobile-toggle" class="md:hidden text-ivory focus:outline-none p-2" aria-label="Toggle navigation">
-      <svg id="burger-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M4 8h16M4 16h16"></path>
-      </svg>
-      <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M6 18L18 6M6 6l12 12"></path>
-      </svg>
-    </button>
-  </header>
+      <!-- Mobile hamburger -->
+      <button id="mobile-toggle"
+              class="md:hidden text-ivory/80 hover:text-white focus:outline-none p-2 transition-colors"
+              aria-label="Toggle navigation">
+        <svg id="burger-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.3" d="M4 7h16M4 17h16"/>
+        </svg>
+        <svg id="close-icon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.3" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </header>
 
-  <!-- ==================== LOOPED TEXT BAND ==================== -->
-  <div class="relative w-full h-8 overflow-hidden flex items-center bg-[#141513]/90 backdrop-blur-sm border-b border-white/10 text-[10px] tracking-[0.26em] uppercase font-light text-ivory/70 whitespace-nowrap" role="marquee" aria-label="Site announcements">
-    <div class="marquee-track">
-      <div class="marquee-group">
-        <span class="flex items-center gap-6 px-6"><span>Welcome to FAB HAUS — Architecture &amp; Prefabrication</span><span class="text-bronze">&#9670;</span></span>
-        <span class="flex items-center gap-6 px-6"><span>Architecture &amp; Interiors designed with intent</span><span class="text-bronze">&#9670;</span></span>
-        <span class="flex items-center gap-6 px-6"><span>Pre-Fab &amp; LGSF structures built faster</span><span class="text-bronze">&#9670;</span></span>
-        <span class="flex items-center gap-6 px-6"><span>Modular living, engineered off-site</span><span class="text-bronze">&#9670;</span></span>
-        <span class="flex items-center gap-6 px-6"><span>Explore our latest projects</span><span class="text-bronze">&#9670;</span></span>
-        <span class="flex items-center gap-6 px-6"><span>Now taking new project enquiries</span><span class="text-bronze">&#9670;</span></span>
-        <span class="flex items-center gap-6 px-6"><span>From concept to completion under one roof</span><span class="text-bronze">&#9670;</span></span>
-        <span class="flex items-center gap-6 px-6"><span>Contact us to start your project</span><span class="text-bronze">&#9670;</span></span>
-      </div>
-      <div class="marquee-group" aria-hidden="true">
-        <span class="flex items-center gap-6 px-6"><span>Welcome to FAB HAUS — Architecture &amp; Prefabrication</span><span class="text-bronze">&#9670;</span></span>
-        <span class="flex items-center gap-6 px-6"><span>Architecture &amp; Interiors designed with intent</span><span class="text-bronze">&#9670;</span></span>
-        <span class="flex items-center gap-6 px-6"><span>Pre-Fab &amp; LGSF structures built faster</span><span class="text-bronze">&#9670;</span></span>
-        <span class="flex items-center gap-6 px-6"><span>Modular living, engineered off-site</span><span class="text-bronze">&#9670;</span></span>
-        <span class="flex items-center gap-6 px-6"><span>Explore our latest projects</span><span class="text-bronze">&#9670;</span></span>
-        <span class="flex items-center gap-6 px-6"><span>Now taking new project enquiries</span><span class="text-bronze">&#9670;</span></span>
-        <span class="flex items-center gap-6 px-6"><span>From concept to completion under one roof</span><span class="text-bronze">&#9670;</span></span>
-        <span class="flex items-center gap-6 px-6"><span>Contact us to start your project</span><span class="text-bronze">&#9670;</span></span>
+    <!-- ── Looped marquee band (PROJECT.md spec) ── -->
+    <div class="relative w-full h-8 overflow-hidden flex items-center
+                bg-[#121210] border-b border-white/[0.07]
+                text-[9px] tracking-[0.28em] uppercase font-light text-ivory/45 whitespace-nowrap"
+         role="marquee" aria-label="Site announcements">
+      <div class="marquee-track">
+
+        <!-- Group 1 -->
+        <div class="marquee-group">
+          <span class="flex items-center gap-6 px-6"><span>Welcome to FAB HAUS — Architecture &amp; Prefabrication</span><span class="text-crimson">&#9670;</span></span>
+          <span class="flex items-center gap-6 px-6"><span>Architecture &amp; Interiors designed with intent</span><span class="text-crimson">&#9670;</span></span>
+          <span class="flex items-center gap-6 px-6"><span>Pre-Fab &amp; LGSF structures built faster</span><span class="text-crimson">&#9670;</span></span>
+          <span class="flex items-center gap-6 px-6"><span>Modular living, engineered off-site</span><span class="text-crimson">&#9670;</span></span>
+          <span class="flex items-center gap-6 px-6"><span>Explore our latest projects</span><span class="text-crimson">&#9670;</span></span>
+          <span class="flex items-center gap-6 px-6"><span>Now taking new project enquiries</span><span class="text-crimson">&#9670;</span></span>
+          <span class="flex items-center gap-6 px-6"><span>From concept to completion under one roof</span><span class="text-crimson">&#9670;</span></span>
+          <span class="flex items-center gap-6 px-6"><span>Contact us to start your project</span><span class="text-crimson">&#9670;</span></span>
+        </div>
+
+        <!-- Group 2 — identical, aria-hidden: required for seamless loop (PROJECT.md spec) -->
+        <div class="marquee-group" aria-hidden="true">
+          <span class="flex items-center gap-6 px-6"><span>Welcome to FAB HAUS — Architecture &amp; Prefabrication</span><span class="text-crimson">&#9670;</span></span>
+          <span class="flex items-center gap-6 px-6"><span>Architecture &amp; Interiors designed with intent</span><span class="text-crimson">&#9670;</span></span>
+          <span class="flex items-center gap-6 px-6"><span>Pre-Fab &amp; LGSF structures built faster</span><span class="text-crimson">&#9670;</span></span>
+          <span class="flex items-center gap-6 px-6"><span>Modular living, engineered off-site</span><span class="text-crimson">&#9670;</span></span>
+          <span class="flex items-center gap-6 px-6"><span>Explore our latest projects</span><span class="text-crimson">&#9670;</span></span>
+          <span class="flex items-center gap-6 px-6"><span>Now taking new project enquiries</span><span class="text-crimson">&#9670;</span></span>
+          <span class="flex items-center gap-6 px-6"><span>From concept to completion under one roof</span><span class="text-crimson">&#9670;</span></span>
+          <span class="flex items-center gap-6 px-6"><span>Contact us to start your project</span><span class="text-crimson">&#9670;</span></span>
+        </div>
+
       </div>
     </div>
-  </div>
-  </div>
+  </div><!-- /#top-bar -->
 
-  <!-- Mobile Drawer / Overlay -->
-  <div id="mobile-menu" class="fixed inset-0 bg-[#161715]/98 z-40 flex flex-col justify-center px-10 transition-all duration-500 opacity-0 pointer-events-none md:hidden">
-    <nav class="space-y-6 text-lg tracking-[0.2em] uppercase font-light text-ivory">
-      <div><a href="#" class="hover:text-bronze transition-colors">Home</a></div>
-      <div><a href="#projects" class="hover:text-bronze transition-colors">Projects</a></div>
-      <div><a href="#architecture" class="hover:text-bronze transition-colors">Architecture</a></div>
-      <div><a href="#interior" class="hover:text-bronze transition-colors">Interior</a></div>
-      <div><a href="#" class="hover:text-bronze transition-colors">Fab Haus Modular</a></div>
-      <div><a href="#" class="hover:text-bronze transition-colors">Pre-Fab</a></div>
-      <div><a href="#" class="hover:text-bronze transition-colors">About Us</a></div>
-      <div><a href="#" class="text-bronze hover:text-ivory transition-colors">Contact Us</a></div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       MOBILE FULL-SCREEN OVERLAY MENU
+  ════════════════════════════════════════════════════════ -->
+  <div id="mobile-menu"
+       class="fixed inset-0 bg-charcoal/98 z-40 flex flex-col justify-center px-10
+              transition-all duration-500 opacity-0 pointer-events-none md:hidden">
+
+    <nav class="space-y-7 text-xl tracking-[0.22em] uppercase font-light text-ivory">
+      <div><a href="#"             class="hover:text-crimson transition-colors duration-200">Home</a></div>
+      <div><a href="#projects"     class="hover:text-crimson transition-colors duration-200">Projects</a></div>
+      <div><a href="#architecture" class="hover:text-crimson transition-colors duration-200">Architecture</a></div>
+      <div><a href="#interior"     class="hover:text-crimson transition-colors duration-200">Interior</a></div>
+      <div><a href="#"             class="hover:text-crimson transition-colors duration-200">Fab Haus Modular</a></div>
+      <div><a href="#"             class="hover:text-crimson transition-colors duration-200">Pre-Fab</a></div>
+      <div><a href="#"             class="hover:text-crimson transition-colors duration-200">About Us</a></div>
+      <div><a href="#"             class="text-crimson hover:text-ivory transition-colors duration-200">Contact Us</a></div>
     </nav>
+
+    <!-- Red accent mark -->
+    <div class="mt-14 flex items-center gap-3">
+      <div class="w-8 h-px bg-crimson"></div>
+      <span class="text-[8px] tracking-[0.4em] uppercase text-muted">Architecture &amp; Prefabrication</span>
+    </div>
   </div>
 
-  <!-- ==================== FULL-BLEED SLIDER CONTAINER ==================== -->
+
+  <!-- ═══════════════════════════════════════════════════════
+       HERO SLIDER  (PROJECT.md spec — full-bleed, 4 slides)
+  ════════════════════════════════════════════════════════ -->
   <main class="relative w-full h-full min-h-screen overflow-hidden">
-    
-    <!-- SLIDE 01: Contemporary Residential Villa (Swiss Alps / Cantilevered) -->
-    <div class="slide active absolute inset-0 w-full h-full" data-index="0" data-category="Architecture &amp; Interiors" data-title="The Monolith Pavilion" data-location="Engadin Valley, Switzerland" data-year="2024">
-      <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDwBJ0c2AQfmmcBLQYMokf5JOxYDDiC51cCruvOcJHtzyh8WYULcW6P-CIhhj9xwFhBZd0fI1eJg3K7-Qwxvaq49A5aoxMT_F9vrgQNuCtPP5AwUasUuzmPSc8qwu6ROJSeulCiyZhe6LFJyL8Bjv954-oJK8Y0nf8JSD-TOrRANcd8i0fUsfrKbRWdwHSmC812-brzioK47y4211sk02nJ9v5dZGDCN7jafVPETQs');"></div>
-      <!-- Subtle artistic gradients to maintain readability while letting architecture shine -->
-      <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/35 pointer-events-none"></div>
-      <div class="absolute inset-0 bg-black/15 pointer-events-none"></div>
+
+    <!-- ───── SLIDE 01 ───── -->
+    <div class="slide active absolute inset-0 w-full h-full"
+         data-index="0"
+         data-category="Architecture &amp; Interiors"
+         data-title="The Monolith Pavilion"
+         data-location="Engadin Valley, Switzerland"
+         data-year="2024"
+         data-excerpt="A monolithic concrete form cantilevered over alpine glacial terrain, designed for minimal intervention.">
+      <div class="absolute inset-0 bg-cover bg-center"
+           style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDwBJ0c2AQfmmcBLQYMokf5JOxYDDiC51cCruvOcJHtzyh8WYULcW6P-CIhhj9xwFhBZd0fI1eJg3K7-Qwxvaq49A5aoxMT_F9vrgQNuCtPP5AwUasUuzmPSc8qwu6ROJSeulCiyZhe6LFJyL8Bjv954-oJK8Y0nf8JSD-TOrRANcd8i0fUsfrKbRWdwHSmC812-brzioK47y4211sk02nJ9v5dZGDCN7jafVPETQs');"></div>
+      <!-- KEY: left-panel gradient (white-shadows aesthetic) -->
+      <div class="left-panel-gradient absolute inset-0 pointer-events-none"></div>
+      <!-- Bottom scrim for controls legibility -->
+      <div class="bottom-scrim absolute inset-0 pointer-events-none"></div>
     </div>
 
-    <!-- SLIDE 02: Luxury Interior Space (Milan Penthouse / Warm Travertine) -->
-    <div class="slide inactive absolute inset-0 w-full h-full" data-index="1" data-category="Architecture &amp; Interiors" data-title="Atelier Noire Residence" data-location="Milan, Italy" data-year="2023">
-      <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBuxMegvj4WXLjVFp0-1aF7iwu3rL8HPFA_3Ixn9Gt8CTWZp2MoAYiZA4SKFJ2NiIOkP3sci8f1xoDpMswWlr5iepTCKp1iJjP1avUrkGQuRzhui2yALlfn1GslKe7dsVWgBiyh5S9s_iIjd0cA6YKQjH-TxYGbUEXqf2lrX2_DK421UV8YFJ9Fb0NERBSN4SBKMLwrYX_pMUuiDPKSeHh67UON9rVfvrhC9lUgyuw');"></div>
-      <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/35 pointer-events-none"></div>
-      <div class="absolute inset-0 bg-black/15 pointer-events-none"></div>
+    <!-- ───── SLIDE 02 ───── -->
+    <div class="slide inactive absolute inset-0 w-full h-full"
+         data-index="1"
+         data-category="Architecture &amp; Interiors"
+         data-title="Atelier Noire Residence"
+         data-location="Milan, Italy"
+         data-year="2023"
+         data-excerpt="A warm travertine penthouse where material honesty meets Milanese precision in every surface.">
+      <div class="absolute inset-0 bg-cover bg-center"
+           style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBuxMegvj4WXLjVFp0-1aF7iwu3rL8HPFA_3Ixn9Gt8CTWZp2MoAYiZA4SKFJ2NiIOkP3sci8f1xoDpMswWlr5iepTCKp1iJjP1avUrkGQuRzhui2yALlfn1GslKe7dsVWgBiyh5S9s_iIjd0cA6YKQjH-TxYGbUEXqf2lrX2_DK421UV8YFJ9Fb0NERBSN4SBKMLwrYX_pMUuiDPKSeHh67UON9rVfvrhC9lUgyuw');"></div>
+      <div class="left-panel-gradient absolute inset-0 pointer-events-none"></div>
+      <div class="bottom-scrim absolute inset-0 pointer-events-none"></div>
     </div>
 
-    <!-- SLIDE 03: Modern Modular Building (Forest Retreat / Blackened Timber) -->
-    <div class="slide inactive absolute inset-0 w-full h-full" data-index="2" data-category="Modular Solutions" data-title="Komorebi Forest Sanctuary" data-location="Kyoto Prefecture, Japan" data-year="2024">
-      <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCrpSIncSNGvC61BG7JN_DpNInTzYgt2_yV6PyjMqjjaPt2A1JqgrC_48A-guAHMoQQ2rlcw17eH_m8oita_itcOqQkFAFaCHH05_v8RCoFsS2u4rs18iVQmdFjolxUmF2DC8k-NNd6Qt4-qdV18AtqVjdfjOGRiwPI0rXcsCs_UCAu1baP33ofeBLgYTbLjcpxi3MhUFnGbZELK5eGkPCZ89-Xiu_F0KE0M0gAjYo');"></div>
-      <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/35 pointer-events-none"></div>
-      <div class="absolute inset-0 bg-black/15 pointer-events-none"></div>
+    <!-- ───── SLIDE 03 ───── -->
+    <div class="slide inactive absolute inset-0 w-full h-full"
+         data-index="2"
+         data-category="Modular Solutions"
+         data-title="Komorebi Forest Sanctuary"
+         data-location="Kyoto Prefecture, Japan"
+         data-year="2024"
+         data-excerpt="Blackened-timber modular volumes set within ancient cedar forest, assembled off-site in six weeks.">
+      <div class="absolute inset-0 bg-cover bg-center"
+           style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCrpSIncSNGvC61BG7JN_DpNInTzYgt2_yV6PyjMqjjaPt2A1JqgrC_48A-guAHMoQQ2rlcw17eH_m8oita_itcOqQkFAFaCHH05_v8RCoFsS2u4rs18iVQmdFjolxUmF2DC8k-NNd6Qt4-qdV18AtqVjdfjOGRiwPI0rXcsCs_UCAu1baP33ofeBLgYTbLjcpxi3MhUFnGbZELK5eGkPCZ89-Xiu_F0KE0M0gAjYo');"></div>
+      <div class="left-panel-gradient absolute inset-0 pointer-events-none"></div>
+      <div class="bottom-scrim absolute inset-0 pointer-events-none"></div>
     </div>
 
-    <!-- SLIDE 04: Prefabricated Commercial Structure (Aeroform Logistics &amp; Research Hub) -->
-    <div class="slide inactive absolute inset-0 w-full h-full" data-index="3" data-category="Pre-Fab &amp; LGSF" data-title="Aeroform Kinetic Pavilion" data-location="Basel, Switzerland" data-year="2023">
-      <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBsZ1nX8QN7KRf1i_hnECTE3FOh9XPF3qNTW_Lix5ArQzUIUWsW8r1yo0dPhk3yY8CIiA7ceb-hSpx8ca2RNXofpAiq2IDuuRvu-ATb9tCnH9NMQ81R0xZVBHYUhwwARvaiXPLinmBhzC898mtmQhUVvWvjoRkNmSxukK9mUv_ALwFcI2slVkq5JqCDYdpQVHyb6t0vfT_4OXN15Y-fENbQNWdgpbWUcY__s2UVGlo');"></div>
-      <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/35 pointer-events-none"></div>
-      <div class="absolute inset-0 bg-black/15 pointer-events-none"></div>
+    <!-- ───── SLIDE 04 ───── -->
+    <div class="slide inactive absolute inset-0 w-full h-full"
+         data-index="3"
+         data-category="Pre-Fab &amp; LGSF"
+         data-title="Aeroform Kinetic Pavilion"
+         data-location="Basel, Switzerland"
+         data-year="2023"
+         data-excerpt="A LGSF-framed public pavilion engineered for rapid deployment, structural lightness and bold presence.">
+      <div class="absolute inset-0 bg-cover bg-center"
+           style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBsZ1nX8QN7KRf1i_hnECTE3FOh9XPF3qNTW_Lix5ArQzUIUWsW8r1yo0dPhk3yY8CIiA7ceb-hSpx8ca2RNXofpAiq2IDuuRvu-ATb9tCnH9NMQ81R0xZVBHYUhwwARvaiXPLinmBhzC898mtmQhUVvWvjoRkNmSxukK9mUv_ALwFcI2slVkq5JqCDYdpQVHyb6t0vfT_4OXN15Y-fENbQNWdgpbWUcY__s2UVGlo');"></div>
+      <div class="left-panel-gradient absolute inset-0 pointer-events-none"></div>
+      <div class="bottom-scrim absolute inset-0 pointer-events-none"></div>
     </div>
 
-    <!-- ==================== LOWER-LEFT REFINED PROJECT DETAILS ==================== -->
-    <div class="absolute bottom-10 md:bottom-14 left-8 md:left-14 z-20 pointer-events-none max-w-xl">
-      <div class="flex items-center gap-3 mb-2">
-        <span id="project-category" class="text-[10px] md:text-xs tracking-[0.26em] uppercase text-bronze font-medium transition-all duration-500">
+
+    <!-- ═══════════════════════════════════════════════════════
+         LEFT OVERLAY TEXT CARD
+         White-shadows: positioned upper-left over the dark panel,
+         PROJECT.md: bottom-left anchor on small screens, mid-left on desktop
+    ════════════════════════════════════════════════════════ -->
+    <div class="absolute z-20 pointer-events-none
+                left-0 top-[100px] md:top-[110px]
+                w-[85vw] md:w-[38vw] lg:w-[32vw] xl:w-[28vw]
+                px-8 md:px-12 lg:px-16
+                flex flex-col justify-start">
+
+      <!-- Category + year (PROJECT.md: bottom-left category & year) -->
+      <div class="flex items-center gap-3 mb-5">
+        <div class="w-6 h-px bg-crimson flex-shrink-0"></div>
+        <span id="project-category"
+              class="text-[9px] tracking-[0.32em] uppercase text-crimson font-medium">
           Architecture &amp; Interiors
         </span>
-        <span class="w-1 h-1 rounded-full bg-ivory/40"></span>
-        <span id="project-year" class="text-[10px] md:text-xs tracking-[0.2em] text-ivory/60 transition-all duration-500">
+        <span class="w-1 h-1 rounded-full bg-white/20 flex-shrink-0"></span>
+        <span id="project-year"
+              class="text-[9px] tracking-[0.22em] text-ivory/45 font-light">
           2024
         </span>
       </div>
-      
-      <h1 id="project-title" class="font-serif text-3xl md:text-5xl lg:text-6xl font-light text-ivory text-scrim tracking-wide leading-tight transition-all duration-500">
+
+      <!-- Project title — white-shadows: uppercase, bold; we keep serif for FAB HAUS identity -->
+      <h1 id="project-title"
+          class="font-serif text-3xl md:text-4xl lg:text-[2.6rem] xl:text-[3rem]
+                 font-light text-ivory tracking-[0.03em] leading-[1.08] mb-5 uppercase text-scrim">
         The Monolith Pavilion
       </h1>
-      
-      <p id="project-location" class="mt-2 text-xs md:text-sm text-ivory/70 tracking-[0.16em] uppercase font-light transition-all duration-500 flex items-center gap-2">
-        <svg class="w-3.5 h-3.5 text-bronze" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-        </svg>
-        <span id="location-text">Engadin Valley, Switzerland</span>
-      </p>
-    </div>
 
-    <!-- ==================== BOTTOM CENTER MINIMAL CTA ==================== -->
-    <div class="absolute bottom-11 md:bottom-14 left-1/2 -translate-x-1/2 z-30 pointer-events-auto">
-      <a href="#projects" class="group flex items-center gap-3.5 py-3 px-6 text-xs md:text-sm tracking-[0.28em] uppercase font-light text-ivory/90 hover:text-white transition-all duration-300">
+      <!-- Excerpt (white-shadows has a short project description) -->
+      <p id="project-excerpt"
+         class="text-[11px] md:text-xs text-ivory/65 font-light leading-[1.8] tracking-[0.04em]
+                mb-6 max-w-[280px] md:max-w-none">
+        A monolithic concrete form cantilevered over alpine glacial terrain, designed for minimal intervention.
+      </p>
+
+      <!-- Location (PROJECT.md spec) -->
+      <p class="flex items-center gap-2 mb-7">
+        <svg class="w-3 h-3 text-crimson flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"
+                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+        </svg>
+        <span id="location-text"
+              class="text-[9px] tracking-[0.22em] uppercase text-ivory/50 font-light">
+          Engadin Valley, Switzerland
+        </span>
+      </p>
+
+      <!-- "KNOW MORE" style CTA (white-shadows: uppercase text link, no border/fill) -->
+      <a href="#projects"
+         class="pointer-events-auto group inline-flex items-center gap-3
+                text-[10px] tracking-[0.32em] uppercase font-medium text-ivory
+                hover:text-white transition-colors duration-250">
         <span class="relative">
-          VIEW PROJECTS
-          <!-- Refined bottom underline micro-interaction -->
-          <span class="absolute bottom-0 left-0 w-0 h-[1px] bg-bronze transition-all duration-300 group-hover:w-full"></span>
+          Know More
+          <span class="absolute bottom-[-3px] left-0 w-0 h-px bg-crimson
+                       transition-all duration-300 group-hover:w-full"></span>
         </span>
-        <!-- Animated Arrow that moves smoothly to the right on hover -->
-        <span class="inline-block transform transition-transform duration-300 ease-out group-hover:translate-x-2 text-bronze text-base">
-          &rarr;
-        </span>
+        <span class="text-crimson transform transition-transform duration-300
+                     group-hover:translate-x-1.5 text-sm leading-none">&#8594;</span>
       </a>
     </div>
 
-    <!-- ==================== BOTTOM LOADING DOTS (INDICATOR) ==================== -->
-    <div id="loading-dots" class="absolute bottom-3 md:bottom-4 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2.5 opacity-70 transition-opacity duration-300 hover:opacity-100" style="opacity: 0.7;" aria-label="Slide change indicators">
-      <!-- Generated dynamically in JS -->
+
+    <!-- ═══════════════════════════════════════════════════════
+         BOTTOM-CENTRE: "VIEW PROJECTS" CTA  (PROJECT.md spec)
+    ════════════════════════════════════════════════════════ -->
+    <div class="absolute bottom-[3.75rem] md:bottom-[4.25rem] left-1/2 -translate-x-1/2 z-30
+                pointer-events-auto hidden md:flex flex-col items-center gap-1">
+      <a href="#projects"
+         class="group flex items-center gap-3
+                text-[9px] tracking-[0.32em] uppercase font-light
+                text-ivory/55 hover:text-white transition-colors duration-250">
+        <span class="relative">
+          View Projects
+          <span class="absolute bottom-[-3px] left-0 w-0 h-px bg-crimson
+                       transition-all duration-300 group-hover:w-full"></span>
+        </span>
+        <span class="text-crimson transform transition-transform duration-300
+                     group-hover:translate-x-1 text-sm">&#8594;</span>
+      </a>
     </div>
 
-    <!-- ==================== LOWER-RIGHT CONTROLS & PAGINATION ==================== -->
-    <div class="absolute bottom-10 md:bottom-14 right-8 md:right-14 z-20 flex items-center gap-6">
-      
-      <!-- Slide Counter (e.g. 01 / 04) -->
-      <div class="text-xs md:text-sm tracking-[0.25em] font-light text-ivory/80 flex items-center gap-2">
-        <span id="current-slide" class="text-ivory font-normal">01</span>
-        <span class="text-ivory/40">/</span>
-        <span class="text-ivory/50">04</span>
+
+    <!-- ═══════════════════════════════════════════════════════
+         BOTTOM-CENTRE: PROGRESS DOTS  (PROJECT.md spec)
+    ════════════════════════════════════════════════════════ -->
+    <div id="loading-dots"
+         class="absolute bottom-[1.1rem] md:bottom-[1.4rem] left-1/2 -translate-x-1/2 z-30
+                flex items-center gap-2.5 opacity-60 hover:opacity-100 transition-opacity duration-300"
+         aria-label="Slide change indicators">
+      <!-- Built dynamically by JS -->
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         BOTTOM-RIGHT: "See all Projects" + counter + prev/next
+         White-shadows has "See all Projects →" bottom-right.
+         PROJECT.md adds counter + prev/next buttons.
+    ════════════════════════════════════════════════════════ -->
+    <div class="absolute bottom-0 right-8 md:right-14 z-30 h-[3.5rem] md:h-[4rem]
+                flex items-center gap-5 md:gap-7 pointer-events-auto">
+
+      <!-- Slide counter (PROJECT.md spec) -->
+      <div class="flex items-center gap-1.5 text-[10px] md:text-xs tracking-[0.22em] text-ivory/50">
+        <span id="current-slide" class="text-ivory/90 font-normal tabular-nums">01</span>
+        <span class="text-white/20">/</span>
+        <span class="text-white/30 tabular-nums">04</span>
       </div>
 
-      <!-- Minimalist Prev/Next Arrow Triggers -->
-      <div class="flex items-center space-x-2">
-        <button id="prev-btn" class="w-10 h-10 rounded-full border border-white/20 hover:border-ivory flex items-center justify-center text-ivory/80 hover:text-white hover:bg-white/10 transition-all duration-300 focus:outline-none" aria-label="Previous project">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M15 19l-7-7 7-7"></path>
+      <!-- Thin vertical divider -->
+      <div class="hairline-v h-5 hidden md:block"></div>
+
+      <!-- Prev / Next (PROJECT.md spec) -->
+      <div class="flex items-center gap-1.5">
+        <button id="prev-btn"
+                class="w-8 h-8 rounded-full border border-white/[0.14] hover:border-crimson
+                       flex items-center justify-center text-ivory/55 hover:text-white
+                       hover:bg-crimson/15 transition-all duration-250 focus:outline-none"
+                aria-label="Previous project">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" d="M15 19l-7-7 7-7"/>
           </svg>
         </button>
-        <button id="next-btn" class="w-10 h-10 rounded-full border border-white/20 hover:border-ivory flex items-center justify-center text-ivory/80 hover:text-white hover:bg-white/10 transition-all duration-300 focus:outline-none" aria-label="Next project">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M9 5l7 7-7 7"></path>
+        <button id="next-btn"
+                class="w-8 h-8 rounded-full border border-white/[0.14] hover:border-crimson
+                       flex items-center justify-center text-ivory/55 hover:text-white
+                       hover:bg-crimson/15 transition-all duration-250 focus:outline-none"
+                aria-label="Next project">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" d="M9 5l7 7-7 7"/>
           </svg>
         </button>
       </div>
     </div>
 
-    <!-- Background Subtle Slide Progress Line at Bottom Screen Edge -->
-    <div class="absolute bottom-0 left-0 w-full h-[2px] bg-white/10 z-20">
-      <div id="progress-indicator" class="progress-bar-fill h-full bg-bronze w-1/4"></div>
+
+    <!-- ═══════════════════════════════════════════════════════
+         HAIRLINE RULE above bottom bar
+         (white-shadows has this exact line at the bottom of the hero)
+    ════════════════════════════════════════════════════════ -->
+    <div class="absolute bottom-[3.5rem] md:bottom-[4rem] left-8 md:left-14 right-8 md:right-14
+                z-20 hairline-h hidden md:block pointer-events-none"></div>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         BOTTOM PROGRESS LINE  (PROJECT.md spec — crimson)
+    ════════════════════════════════════════════════════════ -->
+    <div class="absolute bottom-0 left-0 w-full h-[2px] bg-white/[0.06] z-20">
+      <div id="progress-indicator" class="progress-bar-fill h-full bg-crimson w-1/4"></div>
     </div>
 
-  </main>
+  </main><!-- /main -->
 
-  <!-- ==================== VANILLA INTERACTION JAVASCRIPT ==================== -->
+
+  <!-- ═══════════════════════════════════════════════════════
+       VANILLA JS — All interaction logic  (PROJECT.md spec)
+  ════════════════════════════════════════════════════════ -->
   <script>
-    (function() {
-      const slides = document.querySelectorAll('.slide');
-      const totalSlides = slides.length;
-      let currentIndex = 0;
-      let isTransitioning = false;
-      const SLIDE_DURATION = 4000; // 4 seconds per slide
+    (function () {
+      /* ── Slide state ── */
+      const slides         = document.querySelectorAll('.slide');
+      const totalSlides    = slides.length;
+      let   currentIndex   = 0;
+      let   isTransitioning= false;
+      const SLIDE_DURATION = 4000; // PROJECT.md: 4s per slide
 
-      // Metadata DOM elements
-      const currentSlideText = document.getElementById('current-slide');
-      const projectCategory = document.getElementById('project-category');
-      const projectTitle = document.getElementById('project-title');
-      const locationText = document.getElementById('location-text');
-      const projectYear = document.getElementById('project-year');
+      /* ── DOM refs ── */
+      const currentSlideEl    = document.getElementById('current-slide');
+      const projectCategoryEl = document.getElementById('project-category');
+      const projectTitleEl    = document.getElementById('project-title');
+      const projectExcerptEl  = document.getElementById('project-excerpt');
+      const locationTextEl    = document.getElementById('location-text');
+      const projectYearEl     = document.getElementById('project-year');
       const progressIndicator = document.getElementById('progress-indicator');
-      const dotsContainer = document.getElementById('loading-dots');
+      const dotsContainer     = document.getElementById('loading-dots');
 
-      // Loading Dots & Progress State
-      let animFrameId = null;
-      let progressStartTime = performance.now();
+      /* ── RAF timer state ── */
+      let animFrameId        = null;
+      let progressStartTime  = performance.now();
       let elapsedBeforePause = 0;
-      let isPaused = false;
-      let activeDotRing = null;
+      let isPaused           = false;
+      let activeDotRing      = null;
 
-      // Initialize small loading dots at the bottom
+      /* ════════════════════════════════════
+         DOTS  (PROJECT.md spec: circular timer ring)
+      ════════════════════════════════════ */
       function initDots() {
         if (!dotsContainer) return;
         dotsContainer.innerHTML = '';
-
         slides.forEach((slide, idx) => {
           const btn = document.createElement('button');
-          btn.type = 'button';
-          btn.className = 'slide-dot relative w-5 h-5 flex items-center justify-center focus:outline-none group cursor-pointer transition-transform duration-300 hover:scale-125';
+          btn.type      = 'button';
+          btn.className = 'slide-dot relative w-5 h-5 flex items-center justify-center focus:outline-none cursor-pointer transition-transform duration-300 hover:scale-125';
           btn.setAttribute('data-index', idx);
           btn.setAttribute('aria-label', `Go to slide ${idx + 1}: ${slide.getAttribute('data-title')}`);
-          btn.setAttribute('title', `${slide.getAttribute('data-title')} (${slide.getAttribute('data-year')})`);
 
-          // Circumference for r=7 is 2 * π * 7 ≈ 43.98 ≈ 44
+          // Circumference for r=7: 2π×7 ≈ 43.98 → 44
+          const isActive = idx === currentIndex;
           btn.innerHTML = `
-            <svg class="dot-ring-svg absolute inset-0 w-5 h-5 -rotate-90 pointer-events-none transition-opacity duration-500 ${idx === currentIndex ? 'opacity-100' : 'opacity-0'}" viewBox="0 0 20 20">
-              <circle cx="10" cy="10" r="7" stroke="rgba(245, 243, 238, 0.18)" stroke-width="1.3" fill="none" />
-              <circle class="dot-progress-ring" cx="10" cy="10" r="7" stroke="#A68B69" stroke-width="1.5" fill="none" stroke-dasharray="44" stroke-dashoffset="44" stroke-linecap="round" />
+            <svg class="dot-ring-svg absolute inset-0 w-5 h-5 -rotate-90 pointer-events-none
+                        transition-opacity duration-500 ${isActive ? 'opacity-100' : 'opacity-0'}"
+                 viewBox="0 0 20 20">
+              <circle cx="10" cy="10" r="7"
+                      stroke="rgba(245,245,243,0.12)" stroke-width="1.2" fill="none"/>
+              <circle class="dot-progress-ring"
+                      cx="10" cy="10" r="7"
+                      stroke="#B01828" stroke-width="1.6" fill="none"
+                      stroke-dasharray="44" stroke-dashoffset="44"
+                      stroke-linecap="round"/>
             </svg>
-            <span class="dot-core w-1.5 h-1.5 rounded-full transition-all duration-300 ${idx === currentIndex ? 'bg-bronze scale-125 shadow-[0_0_8px_rgba(166,139,105,0.7)]' : 'bg-ivory/40 group-hover:bg-ivory'}"></span>
+            <span class="dot-core w-1.5 h-1.5 rounded-full transition-all duration-300
+                         ${isActive
+                           ? 'bg-crimson scale-125 shadow-[0_0_6px_rgba(176,24,40,0.9)]'
+                           : 'bg-ivory/30 hover:bg-ivory/60'}">
+            </span>
           `;
-
           btn.addEventListener('click', (e) => {
             e.stopPropagation();
-            if (currentIndex !== idx && !isTransitioning) {
-              updateSlide(idx);
-            }
+            if (currentIndex !== idx && !isTransitioning) updateSlide(idx);
           });
-
           dotsContainer.appendChild(btn);
         });
-
         updateActiveDot(currentIndex);
       }
 
-      function updateActiveDot(newIndex) {
+      function updateActiveDot(newIdx) {
         if (!dotsContainer) return;
-        const dotBtns = dotsContainer.querySelectorAll('.slide-dot');
-        dotBtns.forEach((btn, idx) => {
-          const svg = btn.querySelector('.dot-ring-svg');
+        dotsContainer.querySelectorAll('.slide-dot').forEach((btn, idx) => {
+          const svg  = btn.querySelector('.dot-ring-svg');
           const ring = btn.querySelector('.dot-progress-ring');
           const core = btn.querySelector('.dot-core');
-
-          if (idx === newIndex) {
+          if (idx === newIdx) {
             svg.classList.remove('opacity-0');
             svg.classList.add('opacity-100');
-            core.classList.remove('bg-ivory/40');
-            core.classList.add('bg-bronze', 'scale-125', 'shadow-[0_0_8px_rgba(166,139,105,0.7)]');
+            core.classList.remove('bg-ivory/30', 'hover:bg-ivory/60');
+            core.classList.add('bg-crimson', 'scale-125', 'shadow-[0_0_6px_rgba(176,24,40,0.9)]');
             activeDotRing = ring;
-            if (activeDotRing) {
-              activeDotRing.style.strokeDashoffset = '44';
-            }
+            if (activeDotRing) activeDotRing.style.strokeDashoffset = '44';
           } else {
             svg.classList.remove('opacity-100');
             svg.classList.add('opacity-0');
-            core.classList.remove('bg-bronze', 'scale-125', 'shadow-[0_0_8px_rgba(166,139,105,0.7)]');
-            core.classList.add('bg-ivory/40');
-            if (ring) {
-              ring.style.strokeDashoffset = '44';
-            }
+            core.classList.remove('bg-crimson', 'scale-125', 'shadow-[0_0_6px_rgba(176,24,40,0.9)]');
+            core.classList.add('bg-ivory/30', 'hover:bg-ivory/60');
+            if (ring) ring.style.strokeDashoffset = '44';
           }
         });
       }
 
+      /* ════════════════════════════════════
+         RAF PROGRESS LOOP
+      ════════════════════════════════════ */
       function startProgressLoop() {
         if (animFrameId) cancelAnimationFrame(animFrameId);
-        progressStartTime = performance.now();
+        progressStartTime  = performance.now();
         elapsedBeforePause = 0;
 
         function loop(now) {
           if (!isPaused && !isTransitioning) {
-            const totalElapsed = (now - progressStartTime) + elapsedBeforePause;
-            const progress = Math.min(totalElapsed / SLIDE_DURATION, 1);
-
-            // Animate SVG circular progress dashoffset from 44 to 0
+            const elapsed  = (now - progressStartTime) + elapsedBeforePause;
+            const progress = Math.min(elapsed / SLIDE_DURATION, 1);
             if (activeDotRing) {
-              const offset = 44 * (1 - progress);
-              activeDotRing.style.strokeDashoffset = offset.toFixed(2);
+              activeDotRing.style.strokeDashoffset = (44 * (1 - progress)).toFixed(2);
             }
-
-            if (totalElapsed >= SLIDE_DURATION) {
+            if (elapsed >= SLIDE_DURATION) {
               elapsedBeforePause = 0;
-              progressStartTime = performance.now();
+              progressStartTime  = performance.now();
               nextSlide();
+              return;
             }
           }
           animFrameId = requestAnimationFrame(loop);
         }
-
         animFrameId = requestAnimationFrame(loop);
       }
 
       function resetProgressTimer() {
         elapsedBeforePause = 0;
-        progressStartTime = performance.now();
-        if (activeDotRing) {
-          activeDotRing.style.strokeDashoffset = '44';
-        }
+        progressStartTime  = performance.now();
+        if (activeDotRing) activeDotRing.style.strokeDashoffset = '44';
       }
 
+      /* ════════════════════════════════════
+         CORE SLIDE TRANSITION  (PROJECT.md: updateSlide)
+      ════════════════════════════════════ */
       function updateSlide(newIndex) {
         if (isTransitioning || newIndex === currentIndex) return;
         isTransitioning = true;
 
-        // Reset progress timer & update active dot
         updateActiveDot(newIndex);
         resetProgressTimer();
 
-        // Current and Next slide elements
-        const currentSlide = slides[currentIndex];
-        const nextSlide = slides[newIndex];
+        const curEl  = slides[currentIndex];
+        const nextEl = slides[newIndex];
 
-        // Animate out text info slightly with fade
-        projectTitle.style.opacity = '0';
-        projectTitle.style.transform = 'translateY(10px)';
-        projectCategory.style.opacity = '0';
-        projectYear.style.opacity = '0';
-        locationText.style.opacity = '0';
+        // Fade out text
+        [projectTitleEl, projectCategoryEl, projectYearEl,
+         locationTextEl, projectExcerptEl].forEach(el => {
+          if (!el) return;
+          el.style.opacity   = '0';
+          el.style.transform = 'translateY(14px)';
+        });
 
+        // Update text after fade-out
         setTimeout(() => {
-          // Update texts from new slide dataset
-          const title = nextSlide.getAttribute('data-title');
-          const category = nextSlide.getAttribute('data-category');
-          const location = nextSlide.getAttribute('data-location');
-          const year = nextSlide.getAttribute('data-year');
+          projectTitleEl.textContent    = nextEl.getAttribute('data-title');
+          projectCategoryEl.textContent = nextEl.getAttribute('data-category');
+          locationTextEl.textContent    = nextEl.getAttribute('data-location');
+          projectYearEl.textContent     = nextEl.getAttribute('data-year');
+          if (projectExcerptEl) projectExcerptEl.textContent = nextEl.getAttribute('data-excerpt') || '';
 
-          projectTitle.textContent = title;
-          projectCategory.textContent = category;
-          locationText.textContent = location;
-          projectYear.textContent = year;
+          currentSlideEl.textContent       = String(newIndex + 1).padStart(2, '0');
+          progressIndicator.style.width    = ((newIndex + 1) / totalSlides * 100) + '%';
 
-          // Counter format: 01, 02...
-          currentSlideText.textContent = String(newIndex + 1).padStart(2, '0');
-          progressIndicator.style.width = ((newIndex + 1) / totalSlides * 100) + '%';
+          // Fade in text
+          [projectTitleEl, projectCategoryEl, projectYearEl,
+           locationTextEl, projectExcerptEl].forEach(el => {
+            if (!el) return;
+            el.style.opacity   = '1';
+            el.style.transform = 'translateY(0)';
+          });
+        }, 400);
 
-          // Animate in text info
-          projectTitle.style.opacity = '1';
-          projectTitle.style.transform = 'translateY(0)';
-          projectCategory.style.opacity = '1';
-          projectYear.style.opacity = '1';
-          locationText.style.opacity = '1';
-        }, 350);
-
-        // Transition Slide visual states
-        currentSlide.classList.remove('active');
-        currentSlide.classList.add('inactive');
-
-        nextSlide.classList.remove('inactive');
-        nextSlide.classList.add('active');
-
+        // Visual crossfade (PROJECT.md spec)
+        curEl.classList.remove('active');
+        curEl.classList.add('inactive');
+        nextEl.classList.remove('inactive');
+        nextEl.classList.add('active');
         currentIndex = newIndex;
 
-        setTimeout(() => {
-          isTransitioning = false;
-          resetProgressTimer();
-        }, 1200);
+        setTimeout(() => { isTransitioning = false; }, 1600);
       }
 
-      function nextSlide() {
-        const nextIndex = (currentIndex + 1) % totalSlides;
-        updateSlide(nextIndex);
-      }
+      function nextSlide() { updateSlide((currentIndex + 1) % totalSlides); }
+      function prevSlide() { updateSlide((currentIndex - 1 + totalSlides) % totalSlides); }
 
-      function prevSlide() {
-        const prevIndex = (currentIndex - 1 + totalSlides) % totalSlides;
-        updateSlide(prevIndex);
-      }
-
-      // Buttons listener
+      /* ── Button controls ── */
       document.getElementById('next-btn').addEventListener('click', nextSlide);
       document.getElementById('prev-btn').addEventListener('click', prevSlide);
 
-      // Keyboard arrow navigation
+      /* ── Keyboard arrows (PROJECT.md spec) ── */
       window.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowRight') nextSlide();
-        if (e.key === 'ArrowLeft') prevSlide();
+        if (e.key === 'ArrowLeft')  prevSlide();
       });
 
-      // Mobile Touch / Swipe Gesture support
+      /* ── Touch swipe (PROJECT.md spec: 50px threshold) ── */
       let touchStartX = 0;
-      let touchEndX = 0;
       document.addEventListener('touchstart', (e) => {
         touchStartX = e.changedTouches[0].clientX;
       }, { passive: true });
-
       document.addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].clientX;
-        const diff = touchStartX - touchEndX;
-        if (Math.abs(diff) > 50) {
-          if (diff > 0) nextSlide();
-          else prevSlide();
-        }
+        const diff = touchStartX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 50) { diff > 0 ? nextSlide() : prevSlide(); }
       }, { passive: true });
 
-      // Pause auto-sliding on hover over slider or loading dots
+      /* ── Hover pause (PROJECT.md spec) ── */
       const mainSlider = document.querySelector('main');
       mainSlider.addEventListener('mouseenter', () => {
         if (!isPaused) {
@@ -513,7 +698,7 @@
         }
       });
 
-      // Pause when tab is hidden, resume when tab is active
+      /* ── Tab visibility pause (PROJECT.md spec) ── */
       document.addEventListener('visibilitychange', () => {
         if (document.hidden) {
           if (!isPaused) {
@@ -528,33 +713,29 @@
         }
       });
 
-      // Initialize loading dots and start rotation timer
-      initDots();
-      startProgressLoop();
-
-      // Mobile Menu functionality
+      /* ── Mobile menu (PROJECT.md spec) ── */
       const mobileToggle = document.getElementById('mobile-toggle');
-      const mobileMenu = document.getElementById('mobile-menu');
-      const burgerIcon = document.getElementById('burger-icon');
-      const closeIcon = document.getElementById('close-icon');
-      let mobileOpen = false;
+      const mobileMenu   = document.getElementById('mobile-menu');
+      const burgerIcon   = document.getElementById('burger-icon');
+      const closeIcon    = document.getElementById('close-icon');
+      let   mobileOpen   = false;
 
       mobileToggle.addEventListener('click', () => {
         mobileOpen = !mobileOpen;
-        if (mobileOpen) {
-          mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
-          mobileMenu.classList.add('opacity-100', 'pointer-events-auto');
-          burgerIcon.classList.add('hidden');
-          closeIcon.classList.remove('hidden');
-        } else {
-          mobileMenu.classList.add('opacity-0', 'pointer-events-none');
-          mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
-          burgerIcon.classList.remove('hidden');
-          closeIcon.classList.add('hidden');
-        }
+        mobileMenu.classList.toggle('opacity-0',           !mobileOpen);
+        mobileMenu.classList.toggle('pointer-events-none', !mobileOpen);
+        mobileMenu.classList.toggle('opacity-100',          mobileOpen);
+        mobileMenu.classList.toggle('pointer-events-auto',  mobileOpen);
+        burgerIcon.classList.toggle('hidden', mobileOpen);
+        closeIcon.classList.toggle('hidden',  !mobileOpen);
       });
+
+      /* ── Initialise ── */
+      initDots();
+      startProgressLoop();
 
     })();
   </script>
+
 </body>
 </html>
