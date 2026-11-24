@@ -388,7 +388,6 @@
               elapsedBeforePause = 0;
               progressStartTime = performance.now();
               nextSlide();
-              return;
             }
           }
           animFrameId = requestAnimationFrame(loop);
@@ -459,6 +458,7 @@
 
         setTimeout(() => {
           isTransitioning = false;
+          resetProgressTimer();
         }, 1200);
       }
 
